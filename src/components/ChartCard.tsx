@@ -1,4 +1,5 @@
 import { FileImage, FileText } from 'lucide-react';
+import { isPdfUrl } from '@/lib/fileUtils';
 
 interface ChartCardProps {
   icao: string;
@@ -8,7 +9,7 @@ interface ChartCardProps {
 }
 
 export default function ChartCard({ icao, fileUrl, originalName, onClick }: ChartCardProps) {
-  const isPdf = fileUrl.toLowerCase().endsWith('.pdf');
+  const isPdf = isPdfUrl(fileUrl);
   const displayName = originalName || `Chart for ${icao}`;
 
   return (

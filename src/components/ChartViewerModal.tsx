@@ -2,6 +2,7 @@
 
 import { X, ExternalLink } from 'lucide-react';
 import { useEffect } from 'react';
+import { isPdfUrl } from '@/lib/fileUtils';
 
 interface ChartViewerModalProps {
   isOpen: boolean;
@@ -29,7 +30,7 @@ export default function ChartViewerModal({ isOpen, onClose, fileUrl, title }: Ch
 
   if (!isOpen || !fileUrl) return null;
 
-  const isPdf = fileUrl.toLowerCase().endsWith('.pdf');
+  const isPdf = isPdfUrl(fileUrl);
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4 sm:p-6 animate-in fade-in duration-200" onClick={onClose}>

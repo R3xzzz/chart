@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, RefreshCw } from 'lucide-react';
+import { isPdfUrl } from '@/lib/fileUtils';
 
 type ChartNode = {
   _id: string;
@@ -223,7 +224,7 @@ export default function AdminPanel() {
                 </tr>
               ) : (
                 charts.map(chart => {
-                  const isPdf = chart.fileUrl.toLowerCase().endsWith('.pdf');
+                  const isPdf = isPdfUrl(chart.fileUrl);
                   return (
                     <tr key={chart._id} className="hover:bg-slate-800/20 transition-colors">
                       <td className="px-4 py-3 font-mono font-medium text-emerald-400">{chart.icao}</td>
