@@ -1,26 +1,25 @@
 /**
- * Utility to accurately detect if a given file URL should be treated as a PDF or an Image.
- * Handles edge cases for Google Drive links and ignores query parameters.
+ * Helper function to determine if a given file URL should be rendered using an iframe.
+ * - Google Drive links are rendered in an iframe due to CORS and export restrictions.
+ * - PDF links are rendered in an iframe.
+ * - True direct image links are rendered as images.
  */
-export function isPdfUrl(fileUrl: string | null | undefined): boolean {
+export function isIframeUrl(fileUrl: string | null | undefined): boolean {
   if (!fileUrl) return false;
 
   const urlLowerCase = fileUrl.toLowerCase();
 
-  // 1. Google Drive Explicit Checks
-  // Preview links should be treated as PDF viewer (iframe)
-  if (urlLowerCase.includes('drive.google.com/file/') && urlLowerCase.includes('/preview')) {
+  // 1. All Google Drive links should use iframe
+  if (urlLowerCase.includes('drive.google.com')) {
     return true;
   }
-  
-  // Direct export links usually serve images in this context
-  if (urlLowerCase.includes('drive.google.com/') && urlLowerCase.includes('uc?export=view')) {
-    return false;
+
+  // 2. All PDF extensions should use iframe
+  const cleanPath = urlLowerCase.split('?')[0].split('#')[0];
+  if (cleanPath.endsWith('.pdf')) {
+    return true;
   }
 
-  // 2. Extension Based Detection
-  // Strip off query parameters and hash fragments to get the clean file path
-  const cleanPath = urlLowerCase.split('?')[0].split('#')[0];
-  
-  return cleanPath.endsWith('.pdf');
+  // 3. Otherwise treat as image (direct PNG, JPG, WEBP, etc.)
+  return false;
 }

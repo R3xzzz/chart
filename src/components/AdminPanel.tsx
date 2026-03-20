@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Plus, Edit2, Trash2, Save, X, RefreshCw } from 'lucide-react';
-import { isPdfUrl } from '@/lib/fileUtils';
+import { isIframeUrl } from '@/lib/fileUtils';
 
 type ChartNode = {
   _id: string;
@@ -224,14 +224,14 @@ export default function AdminPanel() {
                 </tr>
               ) : (
                 charts.map(chart => {
-                  const isPdf = isPdfUrl(chart.fileUrl);
+                  const isIframe = isIframeUrl(chart.fileUrl);
                   return (
                     <tr key={chart._id} className="hover:bg-slate-800/20 transition-colors">
                       <td className="px-4 py-3 font-mono font-medium text-emerald-400">{chart.icao}</td>
                       <td className="px-4 py-3">{chart.originalName || '-'}</td>
                       <td className="px-4 py-3">
-                        <span className={`px-2 py-1 rounded text-xs font-medium ${isPdf ? 'bg-red-500/10 text-red-500' : 'bg-blue-500/10 text-blue-400'}`}>
-                          {isPdf ? 'PDF' : 'Image'}
+                        <span className={`px-2 py-1 rounded text-xs font-medium ${isIframe ? 'bg-indigo-500/10 text-indigo-400' : 'bg-blue-500/10 text-blue-400'}`}>
+                          {isIframe ? 'Document/Frame' : 'Image'}
                         </span>
                       </td>
                       <td className="px-4 py-3 text-right">

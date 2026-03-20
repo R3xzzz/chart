@@ -1,5 +1,5 @@
 import { FileImage, FileText } from 'lucide-react';
-import { isPdfUrl } from '@/lib/fileUtils';
+import { isIframeUrl } from '@/lib/fileUtils';
 
 interface ChartCardProps {
   icao: string;
@@ -9,7 +9,7 @@ interface ChartCardProps {
 }
 
 export default function ChartCard({ icao, fileUrl, originalName, onClick }: ChartCardProps) {
-  const isPdf = isPdfUrl(fileUrl);
+  const isIframe = isIframeUrl(fileUrl);
   const displayName = originalName || `Chart for ${icao}`;
 
   return (
@@ -20,7 +20,7 @@ export default function ChartCard({ icao, fileUrl, originalName, onClick }: Char
       <div className="absolute inset-x-0 top-0 h-1 bg-gradient-to-r from-blue-600 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity" />
       
       <div className="p-4 bg-slate-950 rounded-full mb-3 group-hover:scale-110 transition-transform">
-        {isPdf ? (
+        {isIframe ? (
           <FileText className="w-8 h-8 text-red-400" />
         ) : (
           <FileImage className="w-8 h-8 text-blue-400" />
